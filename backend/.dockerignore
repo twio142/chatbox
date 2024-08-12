@@ -1,0 +1,6 @@
+node_modules
+npm-debug.log
+build
+uploads
+.DS_Store
+.vscode

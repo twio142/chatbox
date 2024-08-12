@@ -5,12 +5,12 @@ class FileUpload extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const response = await fetch(`http://${process.env.REACT_APP_API_ADDRESS}/upload`, {
+    const response = await fetch(`http://${window.API_URL}/upload`, {
         method: "POST",
         body: formData,
     });
     let { fileURL, fileName } = await response.json();
-    fileURL = `http://${process.env.REACT_APP_API_ADDRESS}${fileURL}`;
+    fileURL = `http://${window.API_URL}${fileURL}`;
     this.props.sendMsg({fileURL, fileName});
   }
   render() {

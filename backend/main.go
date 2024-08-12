@@ -66,6 +66,10 @@ func setupRoutes() {
 		}
 		defer file.Close()
 
+		if _, err := os.Stat("./uploads"); os.IsNotExist(err) {
+			os.Mkdir("./uploads", 0755)
+		}
+
 		filename := header.Filename
 		for {
 			if _, err := os.Stat("./uploads/" + filename); os.IsNotExist(err) {
@@ -119,11 +123,12 @@ func setupRoutes() {
 func main() {
 	fmt.Println("Distributed Chat App v0.01")
 	setupRoutes()
-	address := os.Getenv("PORT")
-	if address == "" {
-		address = "0.0.0.0:8080"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
 	}
-	err := http.ListenAndServe(address, nil)
+	fmt.Println("Server running on port " + port)
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		panic(err)
 	}

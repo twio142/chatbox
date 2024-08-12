@@ -15,7 +15,11 @@ var upgrader = websocket.Upgrader{
 		if os.Getenv("APP_ENV") == "development" {
 			return true
 		}
-		return r.Header.Get("Origin") == r.Host
+		origin := r.Header.Get("Origin")
+		if origin == "" {
+			return false
+		}
+		return origin == "http://" + r.Host || origin == "https://" + r.Host
 	},
 }
 

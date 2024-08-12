@@ -59,7 +59,7 @@ func (pool *Pool) Start() {
 						if len(pool.Clients) == 1 {
 							return "is 1 person"
 						} else {
-							return fmt.Sprintf("are %d people.", len(pool.Clients))
+							return fmt.Sprintf("are %d people", len(pool.Clients))
 						}
 					}())
 					client.Conn.WriteJSON(Message{Text: text})

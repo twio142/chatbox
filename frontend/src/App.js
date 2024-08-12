@@ -31,7 +31,6 @@ class App extends Component {
   }
 
   render() {
-    // todo: add file upload
     return (
       <div className="App">
         <Header />

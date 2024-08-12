@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build:
+      context: frontend
+      target: prod
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    volumes:
+      - static:/app/build
+      - /app/node_modules
+  backend:
+    container_name: chatbox
+    restart: always
+    build:
+      args:
+        - PORT=7001
+      context: backend
+    ports:
+      - ${ADDR:-7001}:7001
+    environment:
+      - APP_ENV=production
+      - NODE_ENV=production
+    volumes:
+      - static:/app/build
+volumes:
+  static:

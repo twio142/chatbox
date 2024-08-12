@@ -1,4 +1,5 @@
-var socket = new WebSocket(`ws://${process.env.REACT_APP_API_ADDRESS}/ws`);
+window.API_URL = process.env.NODE_ENV === 'development' ? 'localhost:8080' : window.location.host;
+var socket = new WebSocket(`ws://${window.API_URL}/ws`);
 
 let connect = cb => {
   console.log("Attempting Connection...");
