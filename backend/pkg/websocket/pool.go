@@ -2,6 +2,7 @@ package websocket
 
 import (
 	"fmt"
+	"os"
 )
 
 type Pool struct {
@@ -35,6 +36,20 @@ func contains(slice []string, item string) bool {
 		}
 	}
 	return false
+}
+
+func clearUploads() {
+	files, err := os.ReadDir("./uploads")
+	if err != nil {
+		fmt.Println("Error reading uploads directory: ", err)
+		return
+	}
+	for _, file := range files {
+		err := os.RemoveAll("./uploads/" + file.Name())
+		if err != nil {
+			fmt.Println("Error removing file: ", err)
+		}
+	}
 }
 
 func (pool *Pool) Start() {
@@ -74,6 +89,10 @@ func (pool *Pool) Start() {
 			for client, _ := range pool.Clients {
 				text := fmt.Sprintf("%s left the room.", clientLeft.ID)
 				client.Conn.WriteJSON(Message{Text: text})
+			}
+			if len(pool.Clients) == 0 {
+				fmt.Println("No clients left, removing uploads")
+				clearUploads()
 			}
 		case message := <-pool.Broadcast:
 			fmt.Println("Sending message to all clients in Pool")
