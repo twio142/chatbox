@@ -7,11 +7,16 @@ FROM node:22-alpine AS prod
 
 WORKDIR /app
 
+RUN addgroup -S app && adduser -S app -G app
+
 COPY package*.json ./
+RUN chown -R app:app /app
+
+USER app
 
 RUN npm install --only=production
 
-COPY . .
+COPY --chown=app:app . .
 
 RUN npm run build
 
@@ -24,11 +29,16 @@ FROM node:22-alpine AS dev
 
 WORKDIR /app
 
+RUN addgroup -S app && adduser -S app -G app
+
 COPY package*.json ./
+RUN chown -R app:app /app
+
+USER app
 
 RUN npm install
 
-COPY . .
+COPY --chown=app:app . .
 
 EXPOSE 3000
 
