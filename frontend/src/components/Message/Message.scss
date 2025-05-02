@@ -1,15 +1,26 @@
 .Message {
   display: block;
-  background-color: white;
   margin: 10px auto;
-  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.2);
   padding: 10px 20px;
   border-radius: 5px;
   clear: both;
+  color: #777777;
 
   &.me {
     color: white;
     float: right;
     background-color: #328ec4;
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.2);
+  }
+  &.other {
+    color: black;
+    float: left;
+    background-color: #f1f1f1;
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  & > .Message__file-icon > img {
+    margin-right: 5px;
+    margin-bottom: -2px;
   }
 }

@@ -5,15 +5,14 @@ import Message from "../Message";
 class ChatHistory extends Component {
   render() {
     const messages = this.props.chatHistory.map((msg, index) => {
-      let {text, fileName, fileURL} = JSON.parse(msg.data);
+      const {text, fileName, fileURL, type} = JSON.parse(msg.data);
       return (
-        <Message key={index} message={text} attachment={{fileName, fileURL}} />
+        <Message key={index} message={text} attachment={{fileName, fileURL}} type={type} />
       );
     });
 
     return (
       <div className="ChatHistory">
-        <h2>Chat History</h2>
         {messages}
       </div>
     );
