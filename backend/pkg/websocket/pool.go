@@ -21,21 +21,12 @@ func NewPool() *Pool {
 	}
 }
 
-func (pool *Pool) getClientNames() []string {
-	names := make([]string, 0, len(pool.Clients))
+func (pool *Pool) getClientNames() map[string]bool {
+	names := make(map[string]bool)
 	for client := range pool.Clients {
-		names = append(names, client.ID)
+		names[client.ID] = true
 	}
 	return names
-}
-
-func contains(slice []string, item string) bool {
-	for _, a := range slice {
-		if a == item {
-			return true
-		}
-	}
-	return false
 }
 
 func clearUploads() {
@@ -56,17 +47,17 @@ func (pool *Pool) Start() {
 	for {
 		select {
 		case clientJoined := <-pool.Register:
+			currentNames := pool.getClientNames()
 			for {
 				newName := RandomName()
-				names := pool.getClientNames()
-				if !contains(names, newName) {
+				if !currentNames[newName] {
 					clientJoined.ID = newName
 					break
 				}
 			}
 			pool.Clients[clientJoined] = true
 			fmt.Println("Size of Connection Pool: ", len(pool.Clients))
-			for client, _ := range pool.Clients {
+			for client := range pool.Clients {
 				if clientJoined.ID == client.ID {
 					text := fmt.Sprintf("Welcome, %s.", client.ID)
 					client.Conn.WriteJSON(Message{Text: text})
@@ -86,7 +77,7 @@ func (pool *Pool) Start() {
 		case clientLeft := <-pool.Unregister:
 			delete(pool.Clients, clientLeft)
 			fmt.Println("Size of Connection Pool: ", len(pool.Clients))
-			for client, _ := range pool.Clients {
+			for client := range pool.Clients {
 				text := fmt.Sprintf("%s left the room.", clientLeft.ID)
 				client.Conn.WriteJSON(Message{Text: text})
 			}
@@ -96,9 +87,13 @@ func (pool *Pool) Start() {
 			}
 		case message := <-pool.Broadcast:
 			fmt.Println("Sending message to all clients in Pool")
-			for client, _ := range pool.Clients {
+			for client := range pool.Clients {
 				text := fmt.Sprintf("%s: %s", message.Client.ID, message.Text)
-				client.Conn.WriteJSON(Message{Text: text, FileName: message.FileName, FileURL: message.FileURL})
+				_type := 2
+				if message.Client.ID == client.ID {
+					_type = 1
+				}
+				client.Conn.WriteJSON(Message{Text: text, FileName: message.FileName, FileURL: message.FileURL, Type: _type})
 			}
 		}
 	}

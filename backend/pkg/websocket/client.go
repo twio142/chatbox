@@ -1,11 +1,12 @@
 package websocket
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
 	"time"
-	"encoding/json"
+
 	// "sync"
 
 	"github.com/gorilla/websocket"
@@ -14,7 +15,7 @@ import (
 var names = []string{"Hippo", "Capybara", "Giraffe", "Meerkat", "Otter", "Penguin", "Panda", "Lion", "Tiger", "Elephant", "Zebra", "Kangaroo", "Koala", "Monkey", "Sloth", "Snake", "Turtle", "Frog", "Lizard", "Chameleon", "Alligator", "Crocodile", "Iguana", "Dragon", "Dinosaur", "Unicorn", "Pegasus", "Phoenix", "Griffin", "Mermaid", "Siren", "Centaur", "Minotaur", "Satyr", "Cyclops", "Goblin", "Orc", "Troll", "Gnome", "Dwarf", "Elf", "Fairy", "Angel", "Demon", "Vampire", "Werewolf", "Ghost", "Zombie", "Mummy", "Witch", "Wizard", "Warlock", "Sorcerer", "Necromancer", "Shaman", "Druid", "Priest", "Monk", "Paladin", "Barbarian", "Ranger", "Rogue", "Bard", "Fighter", "Cleric", "Rogue", "Sorcerer", "Warlock", "Wizard", "Bard", "Druid", "Monk", "Paladin", "Ranger", "Cleric", "Fighter", "Barbarian", "Rogue", "Sorcerer", "Warlock", "Wizard", "Bard", "Druid", "Monk", "Paladin", "Ranger", "Cleric", "Fighter", "Barbarian", "Rogue", "Sorcerer", "Warlock", "Wizard", "Bard", "Druid", "Monk", "Paladin", "Ranger", "Cleric", "Fighter", "Barbarian", "Rogue", "Sorcerer", "Warlock", "Wizard", "Bard", "Druid", "Monk", "Paladin", "Ranger", "Cleric", "Fighter", "Barbarian"}
 
 func RandomName() string {
-	var r = rand.New(rand.NewSource(time.Now().UnixNano()))
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return names[r.Intn(len(names))]
 }
 
@@ -25,11 +26,11 @@ type Client struct {
 }
 
 type Message struct {
-	Type      int      `json:"type"`
-	Text      string   `json:"text"`
-	Client    *Client  `json:"client"`
-	FileName   string  `json:"fileName,omitempty"`
-	FileURL    string  `json:"fileURL,omitempty"`
+	Type     int     `json:"type"`
+	Text     string  `json:"text"`
+	Client   *Client `json:"client,omitempty"`
+	FileName string  `json:"fileName,omitempty"`
+	FileURL  string  `json:"fileURL,omitempty"`
 }
 
 func (c *Client) Read() {
