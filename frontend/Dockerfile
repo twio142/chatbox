@@ -14,7 +14,7 @@ RUN chown -R app:app /app
 
 USER app
 
-RUN npm install --only=production
+RUN npm install --omit=dev
 
 COPY --chown=app:app . .
 
