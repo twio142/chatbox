@@ -1,14 +1,17 @@
-import React, { Component } from "react";
-import "./FileUpload.scss";
+import { Component } from 'react';
+import './FileUpload.scss';
 
 class FileUpload extends Component {
-  state = {
-    uploading: false,
-    progress: 0,
-    useChunkedUpload: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      uploading: false,
+      progress: 0,
+      useChunkedUpload: false
+    };
+  }
 
-  handleSubmit = async (event) => {
+  async handleSubmit(event) {
     event.preventDefault();
     this.setState({ uploading: true });
 
@@ -34,10 +37,10 @@ class FileUpload extends Component {
     this.setState({ uploading: false });
   }
 
-  uploadStandard = async (event) => {
+  async uploadStandard (event) {
     const formData = new FormData(event.target);
     const response = await fetch(`http://${window.API_URL}/upload`, {
-      method: "POST",
+      method: 'POST',
       body: formData,
     });
     let { fileURL, fileName } = await response.json();
@@ -45,7 +48,7 @@ class FileUpload extends Component {
     this.props.sendMsg({fileURL, fileName});
   }
 
-  uploadChunked = async (file) => {
+  async uploadChunked (file) {
     const CHUNK_SIZE = 2 * 1024 * 1024; // 2MB chunks
     const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
     const fileID = Date.now().toString(); // Simple unique ID

@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import "./App.css";
-import { connect, sendMsg } from "./api";
-import Header from "./components/Header/Header";
-import ChatHistory from "./components/ChatHistory/ChatHistory";
-import ChatInput from "./components/ChatInput/ChatInput";
-import FileUpload from "./components/FileUpload/FileUpload";
+import React, { Component } from 'react';
+import './App.css';
+import { connect, sendMsg } from './api';
+import Header from './components/Header/Header';
+import ChatHistory from './components/ChatHistory/ChatHistory';
+import ChatInput from './components/ChatInput/ChatInput';
+import FileUpload from './components/FileUpload/FileUpload';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       chatHistory: []
-    }
+    };
   }
 
   componentDidMount() {
     connect((msg) => {
-      console.log("New Message", msg);
+      console.log('New Message', msg);
       this.setState(() => ({
         chatHistory: [...this.state.chatHistory, msg]
       }));
@@ -26,7 +26,7 @@ class App extends Component {
   send(e) {
     if (e.keyCode === 13) {
       sendMsg({text: e.target.value});
-      e.target.value = "";
+      e.target.value = '';
     }
   }
 

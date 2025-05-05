@@ -2,10 +2,10 @@ window.API_URL = process.env.NODE_ENV === 'development' ? 'localhost:8080' : win
 var socket = new WebSocket(`ws://${window.API_URL}/ws`);
 
 let connect = cb => {
-  console.log("Attempting Connection...");
+  console.log('Attempting Connection...');
 
   socket.onopen = () => {
-    console.log("Successfully Connected");
+    console.log('Successfully Connected');
   };
 
   socket.onmessage = msg => {
@@ -14,11 +14,11 @@ let connect = cb => {
   };
 
   socket.onclose = event => {
-    console.log("Socket Closed Connection: ", event);
+    console.log('Socket Closed Connection: ', event);
   };
 
   socket.onerror = error => {
-    console.log("Socket Error: ", error);
+    console.log('Socket Error: ', error);
   };
 };
 

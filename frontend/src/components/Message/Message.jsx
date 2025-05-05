@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./Message.scss";
+import { Component } from 'react';
+import './Message.scss';
 
 const Image = ({ fileURL, fileName }) => {
   const isImage = fileName && /\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i.test(fileName);
@@ -20,19 +20,19 @@ const Image = ({ fileURL, fileName }) => {
       <a href={fileURL} download={fileName}>Download</a>
     </div>
   );
-}
+};
 
 class Message extends Component {
   constructor(props) {
     super(props);
     const SENDERS = {
-      1: "me",
-      2: "other",
+      1: 'me',
+      2: 'other',
     };
     this.state = {
       message: this.props.message,
       attachment: this.props.attachment,
-      sender: SENDERS[this.props.type] || "",
+      sender: SENDERS[this.props.type] || '',
     };
   }
 
