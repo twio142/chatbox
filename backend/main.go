@@ -102,7 +102,7 @@ func setupRoutes() {
 		// Create uploads directory if it doesn't exist
 		chunksDir := "./uploads/chunks/" + fileID
 		if _, e := os.Stat(chunksDir); os.IsNotExist(e) {
-			e = os.MkdirAll(chunksDir, 0755)
+			e = os.MkdirAll(chunksDir, 0o755)
 			if e != nil {
 				http.Error(w, "Error creating chunks directory: "+e.Error(), http.StatusInternalServerError)
 				return
@@ -130,7 +130,7 @@ func setupRoutes() {
 
 			// Make sure the uploads directory exists
 			if _, err := os.Stat("./uploads"); os.IsNotExist(err) {
-				err = os.Mkdir("./uploads", 0755)
+				err = os.Mkdir("./uploads", 0o755)
 				if err != nil {
 					http.Error(w, "Error creating uploads directory: "+err.Error(), http.StatusInternalServerError)
 					return
@@ -189,7 +189,7 @@ func setupRoutes() {
 		defer file.Close()
 
 		if _, e := os.Stat("./uploads"); os.IsNotExist(e) {
-			os.Mkdir("./uploads", 0755)
+			os.Mkdir("./uploads", 0o755)
 		}
 
 		filename := header.Filename

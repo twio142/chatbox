@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^14.6.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-scripts": "^0.0.0",
-    "sass": "^1.89.2",
-    "web-vitals": "^5.0.3"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-scripts": "^5.0.1",
+    "sass": "^1.97.3",
+    "web-vitals": "^5.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

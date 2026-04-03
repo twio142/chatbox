@@ -19,7 +19,7 @@ var upgrader = websocket.Upgrader{
 		if origin == "" {
 			return false
 		}
-		return origin == "http://" + r.Host || origin == "https://" + r.Host
+		return origin == "http://"+r.Host || origin == "https://"+r.Host
 	},
 }
 
